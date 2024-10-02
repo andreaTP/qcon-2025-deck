@@ -56,6 +56,7 @@
             <p>X: @and_prf</p>
             <p>GitHub: #andreaTP</p>
             <br />
+            <img src="imgs/red_hat_logo.svg" height="20%" width="20%" style="height: 20%; width: 20%;"></img>
           </div>
         </div>
       </section>
@@ -274,64 +275,6 @@
           </textarea>
         </section>
 
-        <section data-markdown>
-          <textarea data-template>
-            # Why Chicory?
-            ## How do we execute Wasm in the JVM today?
-
-            - Many mature options for running Wasm
-            - wasmtime, wasmer, wasmedge, v8, etc
-
-            Note:
-
-            - There are a number of Wasm runtimes that you can run in the JVM today.
-            - So why do we need a new runtime?
-            - The primary issue is these runtimes are all written in languages like c++ and rust and distributed as
-            native code.
-
-          </textarea>
-        </section>
-  
-        <section data-markdown>
-          <textarea data-template>
-            # Why Chicory?            
-            ## Loading Native Code in the JVM Has Downsides
-
-            - Distribution: Makes your app platform specific <!-- .element: class="fragment" -->
-            - Runtime: Execution leaves safety and observability of the JVM <!-- .element: class="fragment" -->
-
-            Note:
-
-            - Distribution: The primary reason people target the JVM is for it's platform dependence. This violates it.
-            - Runtime: Jumping into the native code leaves the safety and observability of the JVM. It also adds
-            complexity and overhead when translating across the boundary.
-          </textarea>
-        </section>
-  
-        <section data-markdown>
-          <textarea data-template>
-            # Why Chicory?
-            ## Within the JVM Boundaries
-
-            - Guaranteed Memory Safety
-            - Fault Isolation
-            - Super advanced JIT
-            - Self contained programs
-            - WORA: (Write once run anywhere) Platform independent bytecode
-            - ... more!
-
-            Note:
-
-            - So lets talk about specifics, what are the benefits of staying within the boundaries of the JVM?
-          </textarea>
-        </section>
-
-        <section data-markdown>
-          <textarea data-template>
-            # Is it a VM?
-            <img style="width: 30%;" src="imgs/virtual-machines.png" />
-          </textarea>
-        </section>
       </section>
 
       <section>
@@ -358,7 +301,7 @@
 
         <section data-markdown>
           <textarea data-template>
-            # Demo
+            # Demo -optional-
             run the compiled wasm in a wasm interpreter within a Spring app
           </textarea>
         </section>
@@ -375,6 +318,8 @@
         <section data-markdown>
           <textarea data-template>
             # Demo - real world - OPA
+
+            Cambiare la demo per usare il primo esempio
             
             https://www.openpolicyagent.org/
 

@@ -1,6 +1,7 @@
 package com.example.springboot;
 
-import jakarta.servlet.ServletInputStream;
+import com.dylibso.chicory.runtime.Instance;
+import com.dylibso.chicory.wasm.types.Value;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,10 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 @RestController
 public class WasmController {
@@ -34,11 +33,16 @@ public class WasmController {
 		}
 	}
 
+	private com.dylibso.chicory.runtime.Module wasmModule;
+
 	private void uploadImpl(byte[] wasmBytes) {
-		// do nothing
+		wasmModule = com.dylibso.chicory.runtime.Module.builder(wasmBytes).build();
 	}
 
 	private int computeImpl(int op1, int op2) {
-		return op1 + op2;
+		var instance = wasmModule.instantiate();
+
+		var result = instance.export("operation").apply(Value.i32(op1), Value.i32(op2))[0];
+		return result.asInt();
 	}
 }
