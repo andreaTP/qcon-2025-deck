@@ -1,6 +1,7 @@
 ///usr/bin/env jbang "$0" "$@" ; exit $?
 
-//DEPS com.dylibso.chicory:wasi:999-SNAPSHOT
+//REPOS jitpack
+//DEPS com.github.andreaTP.chicory:wasi:re-enable-jitpack-6b3e236206-1
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
