@@ -11,11 +11,19 @@
 		<java.version>17</java.version>
 		<maven.compiler.release>17</maven.compiler.release>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
-			<groupId>com.dylibso.chicory</groupId>
+			<groupId>com.github.dylibso.chicory</groupId>
 			<artifactId>runtime</artifactId>
-			<version>999-SNAPSHOT</version>
+			<version>main-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

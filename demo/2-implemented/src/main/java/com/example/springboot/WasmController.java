@@ -49,6 +49,6 @@ public class WasmController {
 			throw new RuntimeException("you need to upload a wasm module first");
 		}
 		Instance instance = Instance.builder(module).build();
-		return instance.export("operation").apply(Value.i32(op1), Value.i32(op2))[0].asInt();
+		return (int) instance.export("operation").apply(op1, op2)[0];
 	}
 }

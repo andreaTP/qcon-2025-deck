@@ -2,7 +2,7 @@ package com.example.springboot;
 
 import com.dylibso.chicory.log.Logger;
 import com.dylibso.chicory.log.SystemLogger;
-import com.dylibso.chicory.runtime.HostImports;
+import com.dylibso.chicory.runtime.ExternalValues;
 import com.dylibso.chicory.runtime.Instance;
 import com.dylibso.chicory.wasi.WasiOptions;
 import com.dylibso.chicory.wasi.WasiPreview1;
@@ -89,11 +89,11 @@ public class WasmController {
 			optsBuilder.withStdout(stdout);
 
 			var wasi = new WasiPreview1(this.logger, optsBuilder.build());
-			var imports = new HostImports(wasi.toHostFunctions());
+			var imports = new ExternalValues(wasi.toHostFunctions());
 
 			Instance
 					.builder(WASM_INTERP_MODULE)
-					.withHostImports(imports)
+					.withExternalValues(imports)
 					.build();
 			var result = new String(stdout.toByteArray());
 			// example output:

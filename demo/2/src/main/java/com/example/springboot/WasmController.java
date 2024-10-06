@@ -33,16 +33,11 @@ public class WasmController {
 		}
 	}
 
-	private com.dylibso.chicory.runtime.Module wasmModule;
-
 	private void uploadImpl(byte[] wasmBytes) {
-		wasmModule = com.dylibso.chicory.runtime.Module.builder(wasmBytes).build();
+		// do nothing
 	}
 
 	private int computeImpl(int op1, int op2) {
-		var instance = wasmModule.instantiate();
-
-		var result = instance.export("operation").apply(Value.i32(op1), Value.i32(op2))[0];
-		return result.asInt();
+		return 0;
 	}
 }

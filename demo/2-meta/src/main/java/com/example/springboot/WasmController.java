@@ -2,16 +2,14 @@ package com.example.springboot;
 
 import com.dylibso.chicory.log.Logger;
 import com.dylibso.chicory.log.SystemLogger;
-import com.dylibso.chicory.runtime.HostImports;
+import com.dylibso.chicory.runtime.ExternalValues;
 import com.dylibso.chicory.runtime.Instance;
 import com.dylibso.chicory.wasi.WasiOptions;
 import com.dylibso.chicory.wasi.WasiPreview1;
 import com.dylibso.chicory.wasm.Module;
 import com.dylibso.chicory.wasm.Parser;
-import com.dylibso.chicory.wasm.types.Value;
 import com.google.common.jimfs.Configuration;
 import com.google.common.jimfs.Jimfs;
-import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.file.FileSystem;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -93,11 +89,11 @@ public class WasmController {
 			optsBuilder.withStdout(stdout);
 
 			var wasi = new WasiPreview1(this.logger, optsBuilder.build());
-			var imports = new HostImports(wasi.toHostFunctions());
+			var imports = new ExternalValues(wasi.toHostFunctions());
 
 			Instance
 					.builder(WASM_INTERP_MODULE)
-					.withHostImports(imports)
+					.withExternalValues(imports)
 					.build();
 			var result = new String(stdout.toByteArray());
 			// example output:
