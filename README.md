@@ -1,5 +1,3 @@
-# Devoxx BE 2024
+# QCon London 2025
 
-Tools in Action
-
-## Meet Chicory, exploit the power of WebAssembly on the server side!
+## WASM in the Enterprise: Secure, Portable, and Ready for Business

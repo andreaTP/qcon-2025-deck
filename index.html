@@ -8,12 +8,12 @@
   <!-- TITLE OF THE PRESENTATION -->
   <!-- ============================================================ -->
   <title>
-    Meet Chicory, exploit the power of WebAssembly on the server side!
+    WASM in the Enterprise: Secure, Portable, and Ready for Business
   </title>
   <!-- ============================================================ -->
 
   <!-- Set a favicon icon (usually the lab logo) -->
-  <link rel="shortcut icon" href="imgs/chicory.ico">
+  <link rel="shortcut icon" href="imgs/chicory1.ico">
 
   <!-- Fonts -->
   <link rel="stylesheet" href="fonts/fontawesome/css/all.css">
@@ -22,7 +22,7 @@
   <!-- Reveal.js styles -->
   <link rel="stylesheet" href="packages/revealjs/dist/reset.css">
   <link rel="stylesheet" href="packages/revealjs/dist/reveal.css">
-  <link rel="stylesheet" href="packages/revealjs/dist/theme/league.css" id="theme">
+  <link rel="stylesheet" href="packages/revealjs/dist/theme/solarized.css" id="theme">
 
   <!-- Theme used for syntax highlighting of code -->
   <link rel="stylesheet" href="packages/revealjs/plugin/highlight/github-gist.css" id="highlight-theme">
@@ -38,173 +38,100 @@
     <div class="slides">
       <section data-markdown>
         <textarea data-template>
-          # Meet Chicory
-          ## exploit the power of WebAssembly on the server side!
+          <img src="./imgs/wasmee.svg" height="20%" width="20%" style="height: 20%; width: 20%;"></img>
 
-          <img src="./imgs/chicory1.png" height="20%" width="20%" style="height: 20%; width: 20%;"></img>
+          # WASM in the Enterprise: Secure, Portable, and Ready for Business
         </textarea>
       </section>
 
       <section>
-        <div class="row">
-          <div class="col tiny">
-            <img style="width: 60%;" src="imgs/io2.png">
-          </div>
-          <div class="col tiny">
-            <h3>Andrea Peruffo</h3>
+        <br/>
+        <img src="imgs/dog_at_see.jpg" style="height: 40%; width: 40%;"></img>
+          
+        <br/>
+        <img src="imgs/red_hat_logo.svg" style="height: 20%; width: 20%;"></img>
+        <img src="imgs/chicory1.png" style="height: 20%; width: 20%;"></img>
+        <br/>
 
-            <p>X: @and_prf</p>
-            <p>GitHub: #andreaTP</p>
-            <br />
-            <img src="imgs/red_hat_logo.svg" height="20%" width="20%" style="height: 20%; width: 20%;"></img>
-          </div>
-        </div>
+        <note style="visibility: hidden; height: 0px;">
+        - I live in sunny Lisbon
+        - Principal Engineer in Middleware in Red Hat
+        - I love programming and open source in particular
+        - I have gone through very different contexts: embedded, robots, machines, cloud, distributed systems, APIs etc.
+        - recently hacking on Chicory but we will see it in detail later on
+        </note>
       </section>
 
       <section>
         <section data-markdown>
           <textarea data-template>
             # WebAssembly
-            sometimes abbreviated Wasm
 
-            <img src="./imgs/WebAssembly_Logo.svg" height="15%" width="15%" style="height: 15%; width: 15%;"></img>
+            ## <img src="./imgs/WebAssembly_Logo.svg" style="height: 15%; width: 15%;"></img> &lt3 browsers
 
-            defines a portable binary-code format and a corresponding text format for executable programs as well as software interfaces for facilitating interactions between such programs and their host environment.
-            
-            [https://en.wikipedia.org/wiki/WebAssembly](https://en.wikipedia.org/wiki/WebAssembly)
-          </textarea>
-        </section>
-        <section data-markdown>
-          <textarea data-template>
-            # Binary Format
+            - **Speed** for image processing
+            - **Secure** execution through sandboxing
+            - **Standard** as part of the W3C
 
-            ```
-            00000000  00 61 73 6d 0b 00 00 00  04 74 79 70 65 87 80 80  |.asm.....type...|
-            00000010  80 00 01 40 02 01 01 01  01 08 66 75 6e 63 74 69  |...@......functi|
-            00000020  6f 6e 82 80 80 80 00 01  00 06 6d 65 6d 6f 72 79  |on........memory|
-            00000030  85 80 80 80 00 80 02 80  02 01 06 65 78 70 6f 72  |...........expor|
-            00000040  74 86 80 80 80 00 01 00  03 61 64 64 04 63 6f 64  |t........add.cod|
-            00000050  65 8c 80 80 80 00 01 86  80 80 80 00 00 14 00 14  |e...............|
-            00000060  01 40 04 6e 61 6d 65 86  80 80 80 00 01 03 61 64  |.@.name.......ad|
-            00000070  64 00 __ __ __ __ __ __  __ __ __ __ __ __ __ __  |d.|
-            ```
-          </textarea>
-        </section>
-        <section data-markdown>
-          <textarea data-template>
-            # Text Format
+            Note:
 
-            ```
-            (module
-              (type $0 (func (param i32 i32) (result i32)))
-              (export "add" $add)
-              (func $add (type $0) (param $var$0 i32) (param $var$1 i32) (result i32)
-                (i32.add
-                  (get_local $var$0)
-                  (get_local $var$1)
-                )
-              )
-            )
-            ```
-          </textarea>
-        </section>
-        <section data-markdown>
-          <textarea data-template>
-            # Executable programs
-
-            ```
-            execute add 1 2
-            > 3
-            ```
-          </textarea>
-        </section>
-        <section data-markdown>
-          <textarea data-template>
-            # Executable programs
-
-            - `get_local $var$0` | push 1
-
-            <table>
-              <tr><td></td></tr>
-              <tr><td>| 1 |</td></tr>
-              <tr><td></td></tr>
-            </table>
-          </textarea>
-        </section>
-        <section data-markdown>
-          <textarea data-template>
-            # Executable programs
-
-            - `get_local $var$1` | push 2
-
-            <table>
-              <tr><td></td></tr>
-              <tr><td>| 2 |</td></tr>
-              <tr><td>| 1 |</td></tr>
-              <tr><td></td></tr>
-            </table>
-          </textarea>
-        </section>
-        <section data-markdown>
-          <textarea data-template>
-            # Executable programs
-
-            - `i32.add` | pop 2
-
-            <table>
-              <tr><td></td></tr>
-              <tr><td>| 1 |</td></tr>
-              <tr><td></td></tr>
-            </table>
-          </textarea>
-        </section>
-        <section data-markdown>
-          <textarea data-template>
-            # Executable programs
-
-            - `i32.add` | pop 1
-
-            <table>
-              <tr><td></td></tr>
-              <tr><td></td></tr>
-            </table>
-          </textarea>
-        </section>
-        <section data-markdown>
-          <textarea data-template>
-            # Executable programs
-
-            - `i32.add` | push 3
-
-            <table>
-              <tr><td></td></tr>
-              <tr><td>| 3 |</td></tr>
-              <tr><td></td></tr>
-            </table>
-          </textarea>
-        </section>
-        <section data-markdown>
-          <textarea data-template>
-            # Java Bytecode
-
-            ```
-            public int add(int, int);
-            Code:
-               0: iload_1
-               1: iload_2
-               2: iadd
-               3: ireturn
-            ```
+            - being it named after the "Web" the natural environment for Wasm is the browser
+            - Wasm shines in the browsers and we are using it on a daily basis
           </textarea>
         </section>
 
         <section data-markdown>
           <textarea data-template>
-            # Facilitating interactions
+            # Server Side
 
-            <img style="width: 50%;" src="imgs/wasm_host_guest.png">
+            ## <img src="./imgs/WebAssembly_Logo.svg" style="height: 15%; width: 15%;"></img>
+
+            - **Polyglot** with a lot of programming languages support
+            - **Embeddable** in a lot of host runtimes
+            - **Secure** allows to run untrusted code
+            - **Standard** as part of the W3C
+
+            Note:
+
+            - Wasm has properties and charateristics that makes it a perfect execution environment on the server
+            - first off it's Polyglot and we can compile from an increasing number of compatible programming languages,
+              we don't need to decide upfront what language to support
+            - it's built to be embedded in a host runtime, similarly to what happens in the browsers with JavaScript
+              we can rely on standard interaction mechanisms that make it easy to be used in different environments
+            - it's secure and the sandboxing mechanism can be leveraged on the server side to enable untrusted code execution
+            - and again, is a W3C standard, is not going away anytime soon and more is going to be built on it
+          </textarea>
+        </section>
+      </section>
+
+      <section>
+        <section data-markdown>
+          <textarea data-template>
+            <img src="./imgs/wasm_bytecode_chicory.png" style="height: 70%; width: 70%;"></img>
+
+            Note:
+
+            As we mentioned a lot of programming languages has something to do with Wasm
+            some compile to it and we have Wasm runtimes in available in a number of environments
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            <img src="./imgs/wasm_bytecode_chicory_only.png" style="height: 70%; width: 70%;"></img>
+
+            Note:
+
+            For today we will concentrate on the challenges and the lessons learned of running
+            WebAssembly in pure Java thanks to the Chicory runtime
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            [chicory.dev](https://chicory.dev)
             <br/>
-            <sub><sup><a href="https://kerkour.com/webassembly-wasi-preview2">image source</a></sup></sub>
+            <img src="./imgs/chicory-qr-code.png" style="height: 10%; width: 10%;"></img>
+
+            <img src="./imgs/chicory1.png" style="height: 30%; width: 30%;"></img>
           </textarea>
         </section>
       </section>
@@ -212,107 +139,274 @@
       <section>
         <section data-markdown>
           <textarea data-template>
-            # The problems it solves
-
-            - sandboxed execution<!-- .element: class="fragment" -->
-            - memory control<!-- .element: class="fragment" -->
-            - speed<!-- .element: class="fragment" -->
-            - standard (W3C)<!-- .element: class="fragment" -->
-          </textarea>
-        </section>
-      </section>
-
-      <section>
-        <section data-markdown>
-          <textarea data-template>
-            # Where is it used?
-
-            - Web Browsers<!-- .element: class="fragment" -->
-            - FaaS<!-- .element: class="fragment" -->
-            - Extensions<!-- .element: class="fragment" -->
-          </textarea>
-        </section>
-      </section>
-
-      <section>
-        <section data-markdown>
-          <!-- GWT / Applet etc. -->
-          <textarea data-template>
-            # The two sides of it
-
-            <img style="width: 50%;" src="imgs/wasm_bytecode.png">
-            <br/>
-
-            - compile to Wasm<!-- .element: class="fragment" -->
-            - execute Wasm code<!-- .element: class="fragment" -->
-
-            <br/>
-            <sub><sup><a href="https://kerkour.com/webassembly-wasi-preview2">image source</a></sup></sub>
-          </textarea>
-        </section>
-      </section>
-
-      <section>
-        <section data-markdown>
-          <textarea data-template>
-            # Demo
-            compile to wasm
-          </textarea>
-        </section>
-
-        <section data-markdown>
-          <textarea data-template>
-            # Demo
-            run the compiled wasm
-          </textarea>
-        </section>
-
-        <section data-markdown>
-          <textarea data-template>
-            # Demo
-            run the compiled wasm in a Spring app
-          </textarea>
-        </section>
-
-        <section data-markdown>
-          <textarea data-template>
-            # Demo -optional-
-            run the compiled wasm in a wasm interpreter within a Spring app
-          </textarea>
-        </section>
-
-        <section data-markdown>
-          <textarea data-template>
-            # Spring -> Chicory -> wasm-interp -> Go func
-            <img style="width: 30%;" src="imgs/virtual-machines.png" />
-            <br/>
-            <img class="fragment" style="width: 10%;" src="imgs/exploding-head.png" />
-          </textarea>
-        </section>
-
-        <section data-markdown>
-          <textarea data-template>
-            # Demo - real world - OPA
-            
-            https://www.openpolicyagent.org/
-
-            - Write a rule
-            https://play.openpolicyagent.org/p/0FjgydMuVo
-            - Compile to Wasm
-            - Use in an interceptor for authz
-          </textarea>
-        </section>
-      </section>
-
-      <section>
-        <section data-markdown>
-          <textarea data-template>
-            # More use-cases
+            <img src="./imgs/dewang-gupta-r8q16QN40Xg-unsplash.jpg" style="height: 30%; width: 30%;"></img>
             
 
+            Note:
+
+            Let's take a moment to appreciate the reasons why we embarked the journey of building a Java native
+            WASM runtime, we are not just crazy, I believe!
+
+            Photo by <a href="https://unsplash.com/@dewang?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Dewang Gupta</a> on <a href="https://unsplash.com/photos/man-using-silver-iphone-6-r8q16QN40Xg?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
           </textarea>
         </section>
-  
+        <section data-markdown>
+          <textarea data-template>
+            ## The JVM: 30 Years of Value Creation
+
+            <div class="row">
+              <div class="col" style="background: inherit;">
+                <ul>
+                  <li>Enterprise</li>
+                  <li>Cloud</li>
+                  <li>Mobile</li>
+                  <li>Tools and Services</li>
+                  <li>Manufacturers</li>
+                  <li>Banks and Finance</li>
+                  <li>Healthcare</li>
+                  <li>Insurance</li>
+                </ul>
+              </div>
+              <div class="col">
+                <img style="width: 70%;" src="imgs/java-servers.jpeg">
+                <br />
+              </div>
+            </div>
+
+            Note:
+
+            - There is a mountain of value that has been created by the JVM.
+            - Stop for a second and reflect on how deeply the JVM is emebedded into the modern economy.
+            - There's 30 years of JVM software in the world creating hundreds of billions of dollars in value across
+            nearly all business verticals. (conservative estimate)
+            - Think about all the massive public companies that are built on the JVM.
+            - Think about the ecosystems as well, like Android that, power billions of devices across the world.  
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            # Loading Native Code in the JVM Has Downsides
+
+            - Distribution: Makes your app platform specific <!-- .element: class="fragment" -->
+            - Runtime: Execution leaves safety and observability of the JVM <!-- .element: class="fragment" -->
+
+            Note:
+
+            - Distribution: The primary reason people target the JVM is for it's platform dependence. This violates it.
+            - Runtime: Jumping into the native code leaves the safety and observability of the JVM. It also adds
+            complexity and overhead when translating across the boundary.
+          </textarea>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+            # Within the JVM Boundaries
+
+            - Guaranteed Memory Safety
+            - Fault Isolation
+            - Advanced JIT
+            - Self contained programs
+            - WORA: (Write once run anywhere) Platform independent bytecode
+            - ... more!
+
+            Note:
+
+            - So lets talk about specifics, what are the benefits of staying within the boundaries of the JVM?
+          </textarea>
+        </section>
+      </section>
+
+      <!-- End of the first introductory 10 minutes -->
+
+      <!-- Start call to action -->
+
+      <section>
+        <section data-markdown>
+          <textarea data-template>
+            <img src="./imgs/wasm_bytecode_chicory_only.png" style="height: 70%; width: 70%;"></img>
+            
+            Note:
+
+            Now that we have the core elements, lets see what happen when the rubber hits the road and we start
+            implementing and scaling real-world use cases of the technology
+
+            Photo by <a href="https://unsplash.com/@hollymandarich?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Holly Mandarich</a> on <a href="https://unsplash.com/photos/person-carrying-yellow-and-black-backpack-walking-between-green-plants-UVyOfX3v0Ls?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+          </textarea>
+        </section>
+      </section>
+
+      <!-- Use case 1 JRuby -->
+
+      <section>
+        <section data-markdown>
+          <textarea data-template>
+            Use case 1
+
+            https://blog.enebo.com/2024/02/23/jruby-prism-parser.html
+            <br/>
+            <img src="./imgs/jruby.png" style="height: 30%; width: 30%;"></img>
+            <br/>
+
+            > JRuby is a high performance, stable, fully threaded Java implementation of the Ruby programming language.
+
+            Note:
+
+            From an historical point of view, JRuby has been the first "real world" use case for Chicory.
+            JRuby is a full implementation of Ruby that runs really fast and is used widely.
+
+            I got contacted regarding a new implementation of the Ruby parser, but let's go step by step.
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            <img src="./imgs/Ruby_logo.svg.png" style="height: 10%; width: 10%;"></img>
+
+            <img src="./imgs/simon-lee-qjs2R1lMMcw-unsplash.jpg" style="height: 30%; width: 30%;"></img>
+            
+            Note:
+
+            Ruby is some kind of an iceberg, C interoperability is a first class building block.
+            Just like Python those days where the language is used for numeric computation as some kind of
+            "DSL" on top of low-level C/C++.
+            Ruby has always been optimized by rewriting fundamental libraries in C.
+
+            This is already a friction point on JRuby where people need to port the "Ruby bits" of a library to Java
+            and subsequently bind to the underlying C code with all the pain and struggle of using JNI and the risks
+            of running code outside the JVM.
+
+            Photo by <a href="https://unsplash.com/@simonppt?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">SIMON LEE</a> on <a href="https://unsplash.com/photos/a-large-iceberg-floating-in-the-water-qjs2R1lMMcw?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            <img src="./imgs/ruby-prism.png" style="height: 10%; width: 10%;"></img>
+
+            <img src="./imgs/dmitriy-demidov-iuuJC_pjLU0-unsplash.jpg" style="height: 40%; width: 40%;"></img>
+            
+            Note:
+
+            Ruby syntax is complex, as it tries to feel natural to humans, and, well, humans are complex creatures ...
+            The first step any interpreter/compiler should pass is parsing the syntax and doing something down the line
+            with it.
+            Given the complexity of the task multiple Ruby parsers emerged, and the situation has been a bit chaotic.
+
+            Photo by <a href="https://unsplash.com/@fotograw?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Dmitriy Demidov</a> on <a href="https://unsplash.com/photos/a-group-of-wrenches-arranged-in-a-circle-iuuJC_pjLU0?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            <img src="./imgs/ruby-prism.png" style="height: 10%; width: 10%;"></img>
+
+            <img src="./imgs/standards_2x.png" style="height: 50%; width: 50%;"></img>
+            
+            Note:
+
+            To sort the situation a new parser have been designed and implemented in pure C: Prism!
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            <img src="./imgs/jruby.png" style="height: 30%; width: 30%;"></img> + 
+            <img src="./imgs/chicory1.png" style="height: 10%; width: 10%;"></img> + 
+            <img src="./imgs/ruby-prism.png" style="height: 10%; width: 10%;"></img>
+            
+            # =
+
+            **Portability!**
+
+            
+            Note:
+
+            Running Prism with Chicory, with zero native dependencies, has several advantages, it doesn't need a C library to be built
+            for each and every target architecture(like x86, ARM etc.).
+            This is important, for example, to bootstrap on IBM Z, which is the processor of IBM's mainframes
+            where the JVM is available, but, compiling and running an additional library requires significant effort.
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            <img src="./imgs/jruby.png" style="height: 30%; width: 30%;"></img> + 
+            <img src="./imgs/chicory1.png" style="height: 10%; width: 10%;"></img> + 
+            <img src="./imgs/ruby-prism.png" style="height: 10%; width: 10%;"></img>
+
+            # =
+            
+            <img src="./imgs/sebastian-molinares-VcRbMldAFU8-unsplash.jpg" style="height: 10%; width: 10%;"></img>
+            
+            Note:
+
+            By using Prim with the Chicory interpreter, why, unsuprisingly, found out that it was pretty slow.
+            But this doesn't need to be the case.
+
+            Photo by <a href="https://unsplash.com/@damebash?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Sebastian Molinares</a> on <a href="https://unsplash.com/photos/primate-climbing-tree-VcRbMldAFU8?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            <img src="./imgs/chicory-aot.png" style="height: 30%; width: 30%;"></img>
+            <br/>
+            <img src="./imgs/bench.png" style="height: 30%; width: 30%;"></img>
+
+            https://github.com/shaunsmith/wasm-bench
+            
+            Note:
+
+            We found out that WASM binary format and Java bytecode are very, very similar, so we developed
+            an experimental AOT(Ahead Of Time) compiler/translator that takes WASM and emits pure Java bytecode,
+            again, with zero dependencies outside Chicory itself.
+            With it you can get pure Java bytecode out of a WASM module and it will run fast on any, stock, JVM.
+            We have a basic "Hello world" application compiled from Go code, and those are the numbers in operations
+            per second, of comparing the Chicory interpreter with the "AOT compiled" pure Java bytecode.
+          </textarea>
+        </section>
+      </section>
+
+      <section>
+        <section data-markdown>
+          <textarea data-template>
+            Use case 2
+
+            https://trino.io/docs/current/udf/python.html
+            <br/>
+            <img src="./imgs/trino-ko_tiny-alt.svg" style="height: 10%; width: 10%;"></img>
+            <br/>
+
+            > Trino, distributed SQL query engine for big data analytics
+
+            Note:
+
+            TrinoDB is a distributed SQL database that happens to be built in Java.
+            One of the first contributors to Chicory, David Philips, wanted to run Python UDF functions.
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            <img src="./imgs/Python-logo-notext.svg.png" style="height: 10%; width: 10%;"></img>
+            &lt3
+            <img src="./imgs/WebAssembly_Logo.svg" style="height: 10%; width: 10%;"></img>
+
+            Note:
+
+            Starting from the recent 3.13 release CPython is officially shipping Wasm binaries.
+            This enable to run the Pyhton interpreter on any WASI/WASM engine.
+            And, of course, to run it on Chicory.
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+
+            Note:
+
+            Go on from here:
+            
+            wget https://github.com/brettcannon/cpython-wasi-build/releases/download/v3.13.2/python-3.13.2-wasi_sdk-24.zip
+            unzip python-3.13.2-wasi_sdk-24.zip
+
+            wasmtime --dir . python.wasm -c "print('hello')"
+
+          </textarea>
+        </section>
       </section>
 
       <section data-markdown>
@@ -324,7 +418,7 @@
 
           https://github.com/dylibso/chicory
           <br/>
-          https://github.com/andreaTP/devoxxbe-2024-deck
+          https://github.com/andreaTP/qcon-2024-deck
         </textarea>
       </section>
     </div>
