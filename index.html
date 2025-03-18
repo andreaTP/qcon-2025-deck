@@ -229,19 +229,19 @@
             Note:
 
             Now that we have the core elements, lets see what happen when the rubber hits the road and we start
-            implementing and scaling real-world use cases of the technology
+            implementing and scaling real-world case studies of the technology
 
             Photo by <a href="https://unsplash.com/@hollymandarich?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Holly Mandarich</a> on <a href="https://unsplash.com/photos/person-carrying-yellow-and-black-backpack-walking-between-green-plants-UVyOfX3v0Ls?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
           </textarea>
         </section>
       </section>
 
-      <!-- Use case 1 JRuby -->
+      <!-- case study 1 JRuby -->
 
       <section>
         <section data-markdown>
           <textarea data-template>
-            Use case 1
+            case study 1
 
             https://blog.enebo.com/2024/02/23/jruby-prism-parser.html
             <br/>
@@ -252,7 +252,7 @@
 
             Note:
 
-            From an historical point of view, JRuby has been the first "real world" use case for Chicory.
+            From an historical point of view, JRuby has been the first "real world" case study for Chicory.
             JRuby is a full implementation of Ruby that runs really fast and is used widely.
 
             I got contacted regarding a new implementation of the Ruby parser, but let's go step by step.
@@ -365,7 +365,7 @@
       <section>
         <section data-markdown>
           <textarea data-template>
-            Use case 2
+            case study 2
 
             https://trino.io/docs/current/udf/python.html
             <br/>
@@ -395,16 +395,115 @@
         </section>
         <section data-markdown>
           <textarea data-template>
+            <img src="./imgs/Python-logo-notext.svg.png" style="height: 10%; width: 10%;"></img>
+
+            <img src="./imgs/sebastian-molinares-VcRbMldAFU8-unsplash.jpg" style="height: 10%; width: 10%;"></img>
+            
+            Note:
+
+            Python is a pure interpreter, and it takes time to, on startup, load the entire standard library.
+            Wasm promises very low latency startup times, so we need to find a way to speedup to make it a viable choiche.
+
+            Photo by <a href="https://unsplash.com/@damebash?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Sebastian Molinares</a> on <a href="https://unsplash.com/photos/primate-climbing-tree-VcRbMldAFU8?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            # Wizer
+
+            https://github.com/bytecodealliance/wizer
+
+            > The WebAssembly Pre-Initializer
+            
+            Note:
+
+            Wizer comes to help, with it you can run your wasm module and record the status in another wasm module.
+            Next time you start the pre-initialized module it will start, super quickly, from where it left.
+          </textarea>
+        </section>
+      </section>
+
+      <section>
+        <section data-markdown>
+          <textarea data-template>
+            case study 3
+
+            https://debezium.io/blog/2025/02/24/go-smt/
+            <br/>
+            <img src="./imgs/debezium-server-architecture.png" style="height: 30%; width: 30%;"></img>
+            <br/>
 
             Note:
 
-            Go on from here:
-            
-            wget https://github.com/brettcannon/cpython-wasi-build/releases/download/v3.13.2/python-3.13.2-wasi_sdk-24.zip
-            unzip python-3.13.2-wasi_sdk-24.zip
+            Debezium is an engine for Change Data Capture capable of connecting to a variety of different databases.
+          </textarea>
+        </section>
+      </section>
 
-            wasmtime --dir . python.wasm -c "print('hello')"
+      <section>
+        <section data-markdown>
+          <textarea data-template>
+            conclusions
 
+            When you need:
+
+            Note:
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            conclusions
+
+            When you need:
+
+            - Safety
+
+            Note:
+
+
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            conclusions
+
+            When you need:
+
+            - Safety
+            - Portability
+            - Speed
+
+            Note:
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            conclusions
+
+            When you need:
+
+            - Safety
+            - Portability
+            - Speed
+            - Polyglot
+
+            Note:
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            conclusions
+
+            When you need:
+
+            - Safety
+            - Portability
+            - Speed
+            - Polyglot
+
+            **WASM** is a good choice
+
+            Note:
           </textarea>
         </section>
       </section>
