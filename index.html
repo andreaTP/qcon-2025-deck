@@ -438,6 +438,52 @@
             Debezium is an engine for Change Data Capture capable of connecting to a variety of different databases.
           </textarea>
         </section>
+        <section data-markdown>
+          <textarea data-template>
+            case study 3
+
+            https://debezium.io/blog/2025/02/24/go-smt/
+            <br/>
+            <img src="./imgs/debezium-server-architecture.png" style="height: 30%; width: 30%;"></img>
+            <br/>
+
+            Note:
+
+            Debezium is an engine for Change Data Capture capable of connecting to a variety of different databases.
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            Debezium Single Message Transformation
+
+            - filter
+            - routing
+            - ...
+
+            Note:
+
+            Bheind the scenes, Debezium, is powered by Kafka Connect and is based, obviously, on Kafka.
+            One of the interesting characteristics of Debezium is that it allows for Single Message Transformations.
+            This means that, for each and every event happening on the database, you can inspect the payload of the generated message
+            and take actions, for example filtering only valid messages or routing the content to a different topic.
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            Debezium Single Message Transformation
+
+            GO
+
+            TODO
+            schema with full serialization in and out
+
+            Note:
+
+            We want to use Go for our transformations, but, given that we are going to run it in a Wasm sandbox
+            we'd need a full cycle of serialization/deserialization of the entire message.
+            
+          </textarea>
+        </section>
       </section>
 
       <section>
