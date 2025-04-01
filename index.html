@@ -46,11 +46,11 @@
 
       <section>
         <br/>
-        <img src="imgs/dog_at_see.jpg" style="height: 40%; width: 40%;"></img>
+        <img src="imgs/minu.jpg" style="height: 40%; width: 40%;"></img>
           
         <br/>
         <img src="imgs/red_hat_logo.svg" style="height: 20%; width: 20%;"></img>
-        <img src="imgs/chicory1.png" style="height: 20%; width: 20%;"></img>
+        <img src="imgs/chicory1.png" style="height: 12%; width: 12%;"></img>
         <br/>
 
         <note style="visibility: hidden; height: 0px;">
@@ -67,7 +67,7 @@
           <textarea data-template>
             # WebAssembly
 
-            ## <img src="./imgs/WebAssembly_Logo.svg" style="height: 15%; width: 15%;"></img> &lt3 browsers
+            ## <img src="./imgs/WebAssembly_Logo.svg" style="height: 15%; width: 15%;"></img> &lt3 <img src="./imgs/5-2-browsers-free-png-image.png" style="height: 15%; width: 15%;"></img>
 
             - **Speed** for image processing
             - **Secure** execution through sandboxing
@@ -77,6 +77,8 @@
 
             - being it named after the "Web" the natural environment for Wasm is the browser
             - Wasm shines in the browsers and we are using it on a daily basis
+
+            <!-- attribution <a href="https://freepngimg.com/png/10486-browsers-free-png-image">Browsers Free Png Image from FreePNGimg.com</a> -->
           </textarea>
         </section>
 
@@ -188,8 +190,8 @@
           <textarea data-template>
             # Loading Native Code in the JVM Has Downsides
 
-            - Distribution: Makes your app platform specific <!-- .element: class="fragment" -->
-            - Runtime: Execution leaves safety and observability of the JVM <!-- .element: class="fragment" -->
+            - **Distribution** : Makes your app platform specific
+            - **Runtime** : Execution leaves safety and observability of the JVM
 
             Note:
 
@@ -260,9 +262,10 @@
         </section>
         <section data-markdown>
           <textarea data-template>
-            <img src="./imgs/Ruby_logo.svg.png" style="height: 10%; width: 10%;"></img>
+            <img src="./imgs/ruby_iceberg.png" style="height: 30%; width: 30%;"></img>
 
-            <img src="./imgs/simon-lee-qjs2R1lMMcw-unsplash.jpg" style="height: 30%; width: 30%;"></img>
+            - **Ruby** UX
+            - **C** foundation
             
             Note:
 
@@ -282,7 +285,13 @@
           <textarea data-template>
             <img src="./imgs/ruby-prism.png" style="height: 10%; width: 10%;"></img>
 
-            <img src="./imgs/dmitriy-demidov-iuuJC_pjLU0-unsplash.jpg" style="height: 40%; width: 40%;"></img>
+            [How to parse Ruby](https://programmingisterrible.com/post/42432568185/how-to-parse-ruby)
+
+            ```ruby
+            (lambda { |x| x.send((x > 0 ? :succ : :pred).to_s.to_sym) }).call((rand(2) == 1 ? -1 : 1) * (1..10).to_a.sample)
+            ```
+
+            > slowly lose your sanity, gazing into the abyss that is **parse.y**
             
             Note:
 
@@ -332,7 +341,7 @@
 
             # =
             
-            <img src="./imgs/sebastian-molinares-VcRbMldAFU8-unsplash.jpg" style="height: 10%; width: 10%;"></img>
+            <img src="./imgs/sloth-no-bkg.png" style="height: 20%; width: 20%;"></img>
             
             Note:
 
@@ -346,9 +355,13 @@
           <textarea data-template>
             <img src="./imgs/chicory-aot.png" style="height: 30%; width: 30%;"></img>
             <br/>
-            <img src="./imgs/bench.png" style="height: 30%; width: 30%;"></img>
+            <img src="./imgs/prism-perf.png" style="height: 30%; width: 30%;"></img>
 
-            https://github.com/shaunsmith/wasm-bench
+            [Throughput :](https://github.com/andreaTP/wasm-bench/tree/bench-prism)
+
+            | Interpreter | AOT |
+            |---|---|
+            | 1127 ops/s | 35259 ops/s |
             
             Note:
 
