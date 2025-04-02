@@ -45,9 +45,11 @@
       </section>
 
       <section>
+        <h1>About me:</h1>
         <br/>
         <img src="imgs/minu.jpg" style="height: 40%; width: 40%;"></img>
-          
+        
+        <br/>
         <br/>
         <img src="imgs/red_hat_logo.svg" style="height: 20%; width: 20%;"></img>
         <img src="imgs/chicory1.png" style="height: 12%; width: 12%;"></img>
@@ -341,7 +343,7 @@
 
             # =
             
-            <img src="./imgs/sloth-no-bkg.png" style="height: 20%; width: 20%;"></img>
+            <img class="fragment fade-up" src="./imgs/sloth-no-bkg.png" style="height: 20%; width: 20%;"></img>
             
             Note:
 
@@ -395,29 +397,47 @@
         </section>
         <section data-markdown>
           <textarea data-template>
-            <img src="./imgs/Python-logo-notext.svg.png" style="height: 10%; width: 10%;"></img>
+            <img src="./imgs/Python-logo-notext.svg.png" style="height: 8%; width: 8%;"></img>
             &lt3
-            <img src="./imgs/WebAssembly_Logo.svg" style="height: 10%; width: 10%;"></img>
+            <img src="./imgs/WebAssembly_Logo.svg" style="height: 9%; width: 9%;"></img>
+
+            <br/>
+            <img src="./imgs/py-tier2.png" style="height: 50%; width: 50%;"></img>
 
             Note:
 
-            Starting from the recent 3.13 release CPython is officially shipping Wasm binaries.
+            Starting from the recent 3.13 release CPython is a Tier 2 release target.
+            So officially supported and any failure will block the release train.
             This enable to run the Pyhton interpreter on any WASI/WASM engine.
-            And, of course, to run it on Chicory.
+            And, of course, it runs on Chicory.
           </textarea>
         </section>
         <section data-markdown>
           <textarea data-template>
-            <img src="./imgs/Python-logo-notext.svg.png" style="height: 10%; width: 10%;"></img>
-
-            <img src="./imgs/sebastian-molinares-VcRbMldAFU8-unsplash.jpg" style="height: 10%; width: 10%;"></img>
+            <img src="./imgs/py-std-lib.png" style="height: 15%; width: 15%;"></img>
+            <img src="./imgs/loading_python.png" style="height: 30%; width: 30%;"></img>
+            <img class="fragment fade-up" src="./imgs/sloth-no-bkg.png" style="height: 20%; width: 20%;"></img>
             
             Note:
 
             Python is a pure interpreter, and it takes time to, on startup, load the entire standard library.
             Wasm promises very low latency startup times, so we need to find a way to speedup to make it a viable choiche.
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            # wasi-vfs
 
-            Photo by <a href="https://unsplash.com/@damebash?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Sebastian Molinares</a> on <a href="https://unsplash.com/photos/primate-climbing-tree-VcRbMldAFU8?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+            https://github.com/kateinoigakukun/wasi-vfs
+
+            > **Embedded file system**: a read only file system embedded in the .wasm binary.
+            
+            Note:
+
+            First off we need to have quick access to all the files of the Python standard library.
+            Instead of loading it from the Host, you can pre-load all of them into the wasm module itself.
+            Using Wasi-VFS we don't need to give access to the host File System.
+            This is also very secure.
           </textarea>
         </section>
         <section data-markdown>
@@ -434,6 +454,21 @@
             Next time you start the pre-initialized module it will start, super quickly, from where it left.
           </textarea>
         </section>
+        <section data-markdown>
+          <textarea data-template>
+            <img src="./imgs/preloaded-python.png" style="height: 50%; width: 50%;"></img>
+
+            - **Before**: initialization time **40 seconds**
+            - **After**: initialization time **1 second**
+
+            <small>on my machine</small>
+            
+            Note:
+
+            So snapshotting a pre-initialized version of Python after loading the entire standard library
+            makes it fast, reliable, and more secure.
+          </textarea>
+        </section>
       </section>
 
       <section>
@@ -441,19 +476,7 @@
           <textarea data-template>
             case study 3
 
-            https://debezium.io/blog/2025/02/24/go-smt/
-            <br/>
-            <img src="./imgs/debezium-server-architecture.png" style="height: 30%; width: 30%;"></img>
-            <br/>
-
-            Note:
-
-            Debezium is an engine for Change Data Capture capable of connecting to a variety of different databases.
-          </textarea>
-        </section>
-        <section data-markdown>
-          <textarea data-template>
-            case study 3
+            <img src="./imgs/debezium.png" style="height: 30%; width: 30%;"></img>
 
             https://debezium.io/blog/2025/02/24/go-smt/
             <br/>
@@ -467,6 +490,23 @@
         </section>
         <section data-markdown>
           <textarea data-template>
+            <img src="./imgs/debezium.png" style="height: 20%; width: 20%;"></img>
+            &lt3
+            <img src="./imgs/go.png" style="height: 12%; width: 12%;"></img>
+            <br/>
+            <br/>
+            because of:
+
+            <img src="./imgs/k8s.png" style="height: 20%; width: 20%;"></img>
+
+            Note:
+
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            # - TODO -
+
             Debezium Single Message Transformation
 
             - filter
@@ -483,6 +523,8 @@
         </section>
         <section data-markdown>
           <textarea data-template>
+            # - TODO -
+
             Debezium Single Message Transformation
 
             GO
@@ -502,9 +544,74 @@
       <section>
         <section data-markdown>
           <textarea data-template>
+            case study 4 - optional
+
+            <img src="./imgs/sqlite370_banner.svg" style="height: 30%; width: 30%;"></img>
+
+            > SQLite is the most used database engine in the world
+
+            Note:
+
+            SQLite is used everywhere, we want to run it safely in Java applications without FFI
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            <img src="./imgs/sqlite370_banner.svg" style="height: 15%; width: 15%;"></img>
+            +
+            <img src="./imgs/Java_programming_language_logo.svg.png" style="height: 8%; width: 8%;"></img>
+            <br/>
+            # =
+            <img src="./imgs/sqlite-compilation.png" style="height: 70%; width: 70%;"></img>
+            <img src="./imgs/SQLite4j_logo.png" style="height: 10%; width: 10%;"></img>
+
+            Note:
+
+            So thanks to Chicory we compiled SQLite to WASM, compiled WASM to Java Bytecode to safely run
+            in the pure JVM
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            <img src="./imgs/sqlite370_banner.svg" style="height: 15%; width: 15%;"></img>
+            +
+            <img src="./imgs/Java_programming_language_logo.svg.png" style="height: 8%; width: 8%;"></img>
+            <br/>
+            # =
+            <img class="fragment fade-up" src="./imgs/sloth-no-bkg.png" style="height: 20%; width: 20%;"></img>
+
+            Note:
+
+            We figured out that execution of a lot of queries was really slow
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            # - TODO -
+            
+            Memory pressure
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            # - TODO -
+
+            Decouple allocation
+          </textarea>
+        </section>
+      </section>
+
+      <section>
+        <section data-markdown>
+          <textarea data-template>
             conclusions
 
             When you need:
+
+            - Safety <!-- .element: class="fragment" -->
+            - Portability <!-- .element: class="fragment" -->
+            - Speed <!-- .element: class="fragment" -->
+            - Polyglot <!-- .element: class="fragment" -->
 
             Note:
           </textarea>
@@ -513,56 +620,29 @@
           <textarea data-template>
             conclusions
 
-            When you need:
+            When you have a constrained problem like:
 
-            - Safety
-
-            Note:
-
-
-          </textarea>
-        </section>
-        <section data-markdown>
-          <textarea data-template>
-            conclusions
-
-            When you need:
-
-            - Safety
-            - Portability
-            - Speed
+            - A stable C/C++/Rust library <!-- .element: class="fragment" -->
+            - A stable ABI (Application Binary Interface) <!-- .element: class="fragment" -->
 
             Note:
           </textarea>
         </section>
         <section data-markdown>
           <textarea data-template>
-            conclusions
-
-            When you need:
-
-            - Safety
-            - Portability
-            - Speed
-            - Polyglot
+            <img src="./imgs/WebAssembly_Logo.svg" style="height: 30%; width: 30%;"></img>
 
             Note:
           </textarea>
         </section>
         <section data-markdown>
           <textarea data-template>
-            conclusions
-
-            When you need:
-
-            - Safety
-            - Portability
-            - Speed
-            - Polyglot
-
-            **WASM** is a good choice
+            <img src="./imgs/forbidden-sloth.png" style="height: 30%; width: 30%;"></img>
 
             Note:
+            
+            Don't fear the sloth!
+            Even if there are technical challenges you can endure the pain and have pretty fast Wasm modules ready for production
           </textarea>
         </section>
       </section>
