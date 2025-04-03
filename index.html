@@ -324,7 +324,7 @@
             
             # =
 
-            **Portability!**
+            # **Portability!**
 
             
             Note:
@@ -355,9 +355,9 @@
         </section>
         <section data-markdown>
           <textarea data-template>
-            <img src="./imgs/chicory-aot.png" style="height: 30%; width: 30%;"></img>
+            <img src="./imgs/chicory-aot.png" style="height: 50%; width: 50%;"></img>
             <br/>
-            <img src="./imgs/prism-perf.png" style="height: 30%; width: 30%;"></img>
+            <img src="./imgs/prism-perf.png" style="height: 20%; width: 20%;"></img>
 
             [Throughput :](https://github.com/andreaTP/wasm-bench/tree/bench-prism)
 
@@ -374,6 +374,9 @@
             We have a basic "Hello world" application compiled from Go code, and those are the numbers in operations
             per second, of comparing the Chicory interpreter with the "AOT compiled" pure Java bytecode.
           </textarea>
+        </section>
+        <section>
+          <img src="./imgs/fast-sloth-no-bkg.png" style="height: 50%; width: 50%;"></img>
         </section>
       </section>
 
@@ -456,18 +459,21 @@
         </section>
         <section data-markdown>
           <textarea data-template>
-            <img src="./imgs/preloaded-python.png" style="height: 50%; width: 50%;"></img>
+            <img src="./imgs/preloaded-python.png" style="height: 60%; width: 60%;"></img>
 
             - **Before**: initialization time **40 seconds**
             - **After**: initialization time **1 second**
 
-            <small>on my machine</small>
+            <small>*on my machine</small>
             
             Note:
 
             So snapshotting a pre-initialized version of Python after loading the entire standard library
             makes it fast, reliable, and more secure.
           </textarea>
+        </section>
+        <section>
+          <img src="./imgs/fast-sloth-no-bkg.png" style="height: 50%; width: 50%;"></img>
         </section>
       </section>
 
@@ -495,7 +501,7 @@
             <img src="./imgs/go.png" style="height: 12%; width: 12%;"></img>
             <br/>
             <br/>
-            because of:
+            because:  
 
             <img src="./imgs/k8s.png" style="height: 20%; width: 20%;"></img>
 
@@ -505,13 +511,13 @@
         </section>
         <section data-markdown>
           <textarea data-template>
-            # - TODO -
+            # **S**ingle **M**essage **T**ransformation
 
-            Debezium Single Message Transformation
+            <img src="./imgs/filter.png" style="height: 40%; width: 40%;"></img>
 
             - filter
             - routing
-            - ...
+            - ... more!
 
             Note:
 
@@ -523,20 +529,40 @@
         </section>
         <section data-markdown>
           <textarea data-template>
-            # - TODO -
+            # Naive approach
 
-            Debezium Single Message Transformation
-
-            GO
-
-            TODO
-            schema with full serialization in and out
+            <img src="./imgs/debezium-serialization-naive.png" style="height: 80%; width: 80%;"></img>
+            <img class="fragment fade-up" src="./imgs/sloth-no-bkg.png" style="height: 20%; width: 20%;"></img>
 
             Note:
 
             We want to use Go for our transformations, but, given that we are going to run it in a Wasm sandbox
-            we'd need a full cycle of serialization/deserialization of the entire message.
+            we'd need a full cycle of serialization/deserialization of the entire message.    
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            ```go
+            package main
+            import (
+              "github.com/debezium/debezium-smt-go-pdk"
+            )
+
+            //export process
+            func process(proxyPtr uint32) uint32 {
+              var sourceVersion = debezium.GetString(debezium.Get(proxyPtr, "value.source.version"))
+              return debezium.SetBool(sourceVersion == "1.2.3")
+            }
+            func main() {}
+            ```
+
+            <img src="./imgs/debezium-serialization-lazy.png" style="height: 40%; width: 40%;"></img>
+
+            <small>https://github.com/debezium/debezium-smt-go-pdk</small>
             
+            Note:
+
+            Instead providing a Go Plugin Development Kit to lazy access the data
           </textarea>
         </section>
       </section>
@@ -587,17 +613,36 @@
         </section>
         <section data-markdown>
           <textarea data-template>
-            # - TODO -
-            
-            Memory pressure
+            # Memory.grow
+            <img src="./imgs/memory-grow.png" style="height: 80%; width: 80%;"></img>
           </textarea>
         </section>
         <section data-markdown>
           <textarea data-template>
-            # - TODO -
-
-            Decouple allocation
+            # Pre-allocation
+            <img src="./imgs/sqlite-memory-base.png" style="height: 40%; width: 40%;"></img>
+            <img class="fragment" src="./imgs/sqlite-memory-after.png" style="height: 40%; width: 40%;"></img>
           </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            <small>https://github.com/roastedroot/sqlite4j</small>
+
+            ```bash
+            mvn test -Dtest=QueryTest
+            ```
+
+            Before:
+
+            > Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: **52.03 s** -- in io.roastedroot.sqlite4j.QueryTest
+
+            After:
+
+            > Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: **8.035 s** -- in io.roastedroot.sqlite4j.QueryTest
+          </textarea>
+        </section>
+        <section>
+          <img src="./imgs/fast-sloth-no-bkg.png" style="height: 50%; width: 50%;"></img>
         </section>
       </section>
 
@@ -630,19 +675,19 @@
         </section>
         <section data-markdown>
           <textarea data-template>
-            <img src="./imgs/WebAssembly_Logo.svg" style="height: 30%; width: 30%;"></img>
-
-            Note:
-          </textarea>
-        </section>
-        <section data-markdown>
-          <textarea data-template>
             <img src="./imgs/forbidden-sloth.png" style="height: 30%; width: 30%;"></img>
 
             Note:
             
             Don't fear the sloth!
             Even if there are technical challenges you can endure the pain and have pretty fast Wasm modules ready for production
+          </textarea>
+        </section>
+        <section data-markdown>
+          <textarea data-template>
+            <img src="./imgs/fast-sloth-happy-no-bkg-wasm.png" style="height: 50%; width: 50%;"></img>
+
+            Note:
           </textarea>
         </section>
       </section>
@@ -657,6 +702,12 @@
           https://github.com/dylibso/chicory
           <br/>
           https://github.com/andreaTP/qcon-2024-deck
+        </textarea>
+      </section>
+
+      <section data-markdown>
+        <textarea data-template>
+          <img style="width: 50%;" src="imgs/wasmIO.jpeg">
         </textarea>
       </section>
     </div>
